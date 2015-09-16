@@ -1,0 +1,10 @@
+var config = {
+    mysql: {
+      host     : 'localhost',
+      user     : 'YOUR_USERNAME_HERE',
+      password : 'YOUR_PASSWORD_HERE',
+      database : 'YOUR_DATABASE_HERE'
+    }
+};
+
+module.exports = config;
