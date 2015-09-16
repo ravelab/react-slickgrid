@@ -6,6 +6,7 @@ classes should alter those!
 */
 
 .slick-header.ui-state-default, .slick-headerrow.ui-state-default {
+  box-sizing: content-box !important;
   width: 100%;
   overflow: hidden;
   border-left: 0px;
@@ -79,6 +80,7 @@ classes should alter those!
 }
 
 .slick-cell, .slick-headerrow-column {
+  box-sizing: content-box !important;
   position: absolute;
   border: 1px solid transparent;
   border-right: 1px dotted silver;

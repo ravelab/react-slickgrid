@@ -99,8 +99,6 @@ function RemoteModel () {
   }
 
   function onSuccess (resp) {
-    console.info (resp);
-
 		var minimumRowFetch = resp.skip;
     var maximumRowFetch = resp.skip + resp[responseItemListName].length;
 

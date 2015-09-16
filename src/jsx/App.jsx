@@ -23,12 +23,19 @@ var App = React.createClass ({
   },
 
   render: function () {
+    var settings = {
+      multiColumnSort: true,
+      defaultColumnWidth: 125,
+      rowHeight: 26
+    };
+
     return (
       <ReactSlickGrid
         responseItem="records"
         endpoint='/records'
         table="NFL"
-        filter={this.state.filter} />
+        filter={this.state.filter}
+        settings={settings} />
     )
   }
 });

@@ -8,13 +8,6 @@ var ReactSlickGrid = React.createClass ({
 
   _loader: null,
   _slickgrid: null,
-  _options: {
-    multiColumnSort: true,
-    enableCellNavigation: true,
-    enableColumnReorder: true,
-    defaultColumnWidth: 100,
-    rowHeight: 26
-  },
 
   getDefaultProps: function () {
     return {
@@ -22,7 +15,55 @@ var ReactSlickGrid = React.createClass ({
       endpoint: undefined,
       table: undefined,
       filter: {},
-      columnWidth: 150
+
+      /** Default SlickGrid grid settings **/
+      settings: {
+        explicitInitialization: false,
+        rowHeight: 25,
+        defaultColumnWidth: 80,
+        enableAddRow: false,
+        leaveSpaceForNewRows: false,
+        editable: false,
+        autoEdit: true,
+        enableCellNavigation: true,
+        enableColumnReorder: true,
+        asyncEditorLoading: false,
+        asyncEditorLoadDelay: 100,
+        forceFitColumns: false,
+        enableAsyncPostRender: false,
+        asyncPostRenderDelay: 50,
+        autoHeight: false,
+        editorLock: Slick.GlobalEditorLock,
+        showHeaderRow: false,
+        headerRowHeight: 25,
+        showTopPanel: false,
+        topPanelHeight: 25,
+        formatterFactory: null,
+        editorFactory: null,
+        cellFlashingCssClass: "flashing",
+        selectedCellCssClass: "selected",
+        multiSelect: true,
+        enableTextSelectionOnCells: false,
+        dataItemColumnValueExtractor: null,
+        fullWidthRows: false,
+        multiColumnSort: false,
+        defaultFormatter: this._defaultFormatter,
+        forceSyncScrolling: false,
+        addNewRowCssClass: "new-row"
+      },
+
+      /** Default SlickGrid columns settings **/
+      columnSettings: {
+        name: "",
+        resizable: true,
+        sortable: false,
+        minWidth: 30,
+        rerenderOnResize: false,
+        headerCssClass: null,
+        defaultSortAsc: true,
+        focusable: true,
+        selectable: true
+      }
     }
   },
 
@@ -59,7 +100,7 @@ var ReactSlickGrid = React.createClass ({
     var id = '#' + this.props.id;
     var rows = this._loader.data;
     var columns = this._generateColumns (this._loader);
-    var options = this._options;
+    var options = this.props.settings;
 
     this._slickgrid = new SlickGrid (id, rows, columns, options);
     this._slickgrid.onColumnsResized.subscribe (this._onColumnResize);
@@ -154,7 +195,7 @@ var ReactSlickGrid = React.createClass ({
         id: column,
         name: column,
         field: column,
-        width: this.props.columnWidth,
+        width: this.props.settings.defaultColumnWidth,
         sortable: true,
       });
     }
@@ -162,6 +203,9 @@ var ReactSlickGrid = React.createClass ({
     return columns;
   },
 
+  /** RemoteModel leverages this function
+      to retrieve the endpoint it will be using
+      for fetching new data **/
   _getUrl: function () {
     return this.props.endpoint;
   },
@@ -187,6 +231,14 @@ var ReactSlickGrid = React.createClass ({
       event.stopPropagation ();
     }.bind (this));
   },
+
+  _defaultFormatter: function defaultFormatter(row, cell, value, columnDefinition, dataContext) {
+      if (value === null) {
+        return "";
+      } else {
+        return (value + "").replace (/&/g, "&amp;").replace (/</g, "&lt;").replace (/>/g, "&gt;");
+      }
+    },
 
   render: function () {
     return (
