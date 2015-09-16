@@ -26,7 +26,7 @@ var App = React.createClass ({
     return (
       <ReactSlickGrid
         responseItem="records"
-        endpoint='http://localhost:4000/records'
+        endpoint='/records'
         table="NFL"
         filter={this.state.filter} />
     )

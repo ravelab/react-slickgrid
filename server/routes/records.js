@@ -12,7 +12,6 @@ var database = require ('../database/connection');
   *    -- filter    : JSON object for generating a WHERE statement
   */
  router.post ('/', function (req, res) {
-   res.setHeader ("Access-Control-Allow-Origin", "*");
    if (!req.body) return res.sendStatus (400);
 
    var table = req.body.table;
