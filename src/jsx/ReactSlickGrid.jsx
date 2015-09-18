@@ -11,10 +11,17 @@ var ReactSlickGrid = React.createClass ({
 
   getDefaultProps: function () {
     return {
-      id: 'slick-grid-container',
+      id: '',
       endpoint: undefined,
       table: undefined,
       filter: {},
+
+      /** Required for the viewport to be visible **/
+      style: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%'
+      },
 
       /** Default SlickGrid grid settings **/
       settings: {
@@ -68,24 +75,27 @@ var ReactSlickGrid = React.createClass ({
   },
 
   componentDidMount: function () {
-    if (this.props.endpoint) {
-      this._initializeSlickData ();
-    } else {
-      this._loader = { data: this.props.data };
-    }
-
-    this._initializeSlickGrid ();
-
-    /** Notifies the grid that
-        it should fetch new records
-        -- in this case, the initial records **/
-    this._slickgrid.onViewportChanged.notify ();
+    this._init ();
   },
 
   componentDidUpdate: function () {
-    /** Whenever a new filter object or props is received
+    /** Whenever a new filter object or props are received
         the grid must request the new records **/
     this._slickgrid.onViewportChanged.notify ();
+  },
+
+  _init: function () {
+    if (this.props.id) {
+      if (this.props.endpoint) {
+        this._initializeSlickData ();
+      } else {
+        this._loader = { data: this.props.data };
+      }
+      this._initializeSlickGrid ();
+      this._slickgrid.onViewportChanged.notify ();
+    } else {
+      console.warn ('ReactSlickGrid requires a unique id to be given as a prop.');
+    }
   },
 
   _initializeSlickData: function () {
@@ -93,7 +103,7 @@ var ReactSlickGrid = React.createClass ({
     this._loader.setGetParameters (this._getParameters);
     this._loader.setGetUrl (this._getUrl);
     this._loader.setReponseItemListName (this.props.responseItem);
-    this._loader.onDataLoaded.subscribe(this._onDataLoaded);
+    this._loader.onDataLoaded.subscribe (this._onDataLoaded);
   },
 
   _initializeSlickGrid: function () {
@@ -143,16 +153,18 @@ var ReactSlickGrid = React.createClass ({
   _addSortIndicator: function (sortDirection) {
     this._cleanSortIndicators (function () {
       if (sortDirection === 'DESC') {
-        $('.slick-sort-indicator-desc').html ('<i class="fa fa-sort-desc"></i>');
+        $('#' + this.props.id).find ('.slick-sort-indicator-desc')
+                              .html ('<i class="fa fa-sort-desc"></i>');
       } else {
-        $('.slick-sort-indicator-asc').html ('<i class="fa fa-sort-asc"></i>');
+        $('#' + this.props.id).find ('.slick-sort-indicator-asc')
+                              .html ('<i class="fa fa-sort-asc"></i>');
       }
-    });
+    }.bind (this));
   },
 
   _cleanSortIndicators: function (callback) {
-    $('.slick-sort-indicator').html ('');
-    $('.slick-sort-indicator').html ('');
+    $('#' + this.props.id).find ('.slick-sort-indicator').html ('');
+    $('#' + this.props.id).find ('.slick-sort-indicator').html ('');
     if (callback) callback ();
   },
 
@@ -177,13 +189,7 @@ var ReactSlickGrid = React.createClass ({
     if (this._slickgrid.getColumns ().length === 0) {
       this._slickgrid.setColumns (this._generateColumns (this._loader));
     }
-
-    for (var i = args.from; i <= args.to; i++) {
-      this._slickgrid.invalidateRow (i);
-    }
-
-    this._slickgrid.updateRowCount ();
-    this._slickgrid.render ();
+    this._slickgrid.invalidate ();
   },
 
   /** Generates columns from the first
@@ -242,7 +248,7 @@ var ReactSlickGrid = React.createClass ({
 
   render: function () {
     return (
-      <div id={this.props.id}></div>
+      <div id={this.props.id} style={this.props.style}></div>
     );
   }
 });

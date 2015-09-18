@@ -12,16 +12,6 @@ var App = React.createClass ({
     };
   },
 
-  componentDidMount: function () {
-    setTimeout (function () {
-      this.setState ({
-        filter: {
-          hello: 'world!'
-        }
-      });
-    }.bind (this), 2000);
-  },
-
   render: function () {
     var settings = {
       multiColumnSort: true,
@@ -31,6 +21,7 @@ var App = React.createClass ({
 
     return (
       <ReactSlickGrid
+        id="slick-grid-container"
         responseItem="records"
         endpoint='/records'
         table="NFL"
