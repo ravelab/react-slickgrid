@@ -1,11 +1,9 @@
 var React = require ('react');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+var DeepDiff = require ('deep-diff');
 var SlickGrid = require('slickgrid/grid');
 var RemoteModel = require ('./utils/RemoteModel');
 
 var ReactSlickGrid = React.createClass ({
-  mixins: [PureRenderMixin],
-
   _loader: null,
   _slickgrid: null,
 
@@ -84,6 +82,11 @@ var ReactSlickGrid = React.createClass ({
     this._slickgrid.onViewportChanged.notify ();
   },
 
+  /** Will only update if either the props or state **/
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return DeepDiff (nextProps, this.props).length !== 0;
+  },
+
   _init: function () {
     if (this.props.id) {
       if (this.props.endpoint) {
@@ -93,6 +96,7 @@ var ReactSlickGrid = React.createClass ({
       }
       this._initializeSlickGrid ();
       this._slickgrid.onViewportChanged.notify ();
+
     } else {
       console.warn ('ReactSlickGrid requires a unique id to be given as a prop.');
     }

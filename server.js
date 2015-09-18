@@ -8,8 +8,8 @@ var server = express ();
 /*
  *  Required for POST requests.
  */
-server.use (bodyParser.json({limit: '50mb'}));
-server.use (bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 5000}));
+server.use (bodyParser.json ({ limit: '50mb' }));
+server.use (bodyParser.urlencoded ({ limit: '50mb', extended: true, parameterLimit: 5000 }));
 
 server.use ('/', express.static (__dirname + '/dist'));
 server.use ('/records', records);

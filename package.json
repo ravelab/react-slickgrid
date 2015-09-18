@@ -27,6 +27,10 @@
     "slickgrid": "~2.1.0-1",
     "sparkgrid": "0.0.1",
     "immutable": "~3.7.5",
-    "mysql": "~2.9.0"
+    "mysql": "~2.9.0",
+    "deep-diff": "~0.3.2",
+    "del": "~2.0.2",
+    "end-of-stream": "~1.1.0",
+    "vinyl-paths": "~2.0.0"
   }
 }
