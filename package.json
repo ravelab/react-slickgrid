@@ -1,11 +1,19 @@
 {
-  "name": "React-Flux-Starter",
-  "version": "0.0.0",
-  "private": true,
+  "name": "react-slickgrid",
+  "version": "0.0.1",
   "author": "Visionist, Inc.",
-  "description": "Starter React/Flux/Sass/Node project for just about anyone.",
-  "main": "server.js",
+  "description": "React wrapper component for SlickGrid",
+  "main": "dist/js/ReactSlickGrid.js",
+  "scripts": {
+    "dist": "node ./node_modules/babel/bin/babel.js --out-dir dist/js src/jsx && node ./node_modules/gulp/bin/gulp.js sass-development"
+  },
   "dependencies": {
+    "deep-diff": "~0.3.2",
+    "faker": "~3.0.1",
+    "slickgrid": "~2.1.0-1"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
     "better-console": "~0.2.4",
     "body-parser": "~1.12.3",
     "express": "~4",
@@ -14,8 +22,6 @@
     "gulp-html-replace": "~1.5.1",
     "gulp-sass": "^2.0.3",
     "gulp-uglify": "~1.2.0",
-    "react": "~0.13.3",
-    "jquery": "~2.1.4",
     "run-sequence": "~1.1.1",
     "gulp-watch": "~4.3.2",
     "vinyl-source-stream": "^1.1.0",
@@ -23,14 +29,12 @@
     "browserify": "^10.2.4",
     "reactify": "^1.1.1",
     "watchify": "^3.2.3",
-    "faker": "~3.0.1",
-    "slickgrid": "~2.1.0-1",
-    "sparkgrid": "0.0.1",
-    "immutable": "~3.7.5",
     "mysql": "~2.9.0",
-    "deep-diff": "~0.3.2",
     "del": "~2.0.2",
-    "end-of-stream": "~1.1.0",
     "vinyl-paths": "~2.0.0"
+  },
+  "peerDependencies": {
+    "react": ">0.13.3",
+    "jquery": "~2.1.4"
   }
 }
