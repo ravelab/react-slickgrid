@@ -39,7 +39,7 @@ gulp.task ('sass-development', function () {
   return gulp.src ('src/sass/**/*.scss')
     .pipe (sass ().on ('error', sass.logError))
     .on ('error', handleError)
-    .pipe (gulp.dest ('dist/src/css'))
+    .pipe (gulp.dest ('dist/css'))
     .on ('error', handleError);
 });
 
@@ -100,7 +100,7 @@ gulp.task ('watch-development', ['html', 'sass'], function () {
   .on ('error', handleError)
   .pipe (source(path.OUT))
   .on ('error', handleError)
-  .pipe (gulp.des t('dist/src'))
+  .pipe (gulp.dest('dist/src'))
   .on ('error', handleError);
 });
 
