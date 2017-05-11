@@ -84,7 +84,7 @@ var ReactSlickGrid = React.createClass ({
 
   /** Will only update if either the props or state **/
   shouldComponentUpdate: function (nextProps, nextState) {
-    var diff = DeepDiff(nextProps, this.props)
+    var diff = DeepDiff.diff(nextProps, this.props)
     return diff && diff.length !== 0;
   },
 
