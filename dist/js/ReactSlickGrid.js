@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var DeepDiff = require('deep-diff');
+var DeepDiff = require('deep-diff').default;
 var SlickGrid = require('slickgrid/grid');
 var RemoteModel = require('./utils/RemoteModel');
 
@@ -88,7 +88,7 @@ var ReactSlickGrid = React.createClass({
 
   /** Will only update if either the props or state **/
   shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
-    var diff = DeepDiff.diff(nextProps, this.props)
+    var diff = DeepDiff(nextProps, this.props)
     return diff && diff.length !== 0;
   },
 

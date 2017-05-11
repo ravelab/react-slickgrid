@@ -1,5 +1,5 @@
 var React = require ('react');
-var DeepDiff = require ('deep-diff');
+var DeepDiff = require ('deep-diff').default;
 var SlickGrid = require('slickgrid/grid');
 var RemoteModel = require ('./utils/RemoteModel');
 
